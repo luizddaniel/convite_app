@@ -1,0 +1,1 @@
+web: gunicorn convite_app.wsgi --log-file -

@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+
+{% block title %} Administracao {% endblock %}
+
+{% block main %}
+
+    <div class="row">
+        <div class="col">
+
+        </div>
+
+        <div class="col-6">
+            <h3>Lista de Convidados</h3>
+
+            <table class="table table-striped">
+
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col"></th>
+                  <th scope="col">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+               {% for person in persons %}
+                <tr>
+                  <th scope="row">{{person.id}}</th>
+                  <th> {{ person.nome }} </th>
+                  <td>
+                      {% if person.confirmacao %}
+                            <a href="\media\clients_photos\convite.png" class="badge badge-success">
+                              <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                            </a>
+                          {% else %}
+                           <a href="{% url 'person_confirmacao' person.id %}" class="badge badge-danger">
+                               <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                           </a>
+
+                          {% endif %}
+                  </td>
+                  <th>
+                       <a href="{% url 'persons_update' person.id %}">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                        <a href="{% url 'persons_delete' person.id %}" class="trash-item">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                  </th>
+                </tr>
+              </tbody>
+              {% endfor %}
+            </table>
+
+            <br>
+
+            <a href="{% url 'person_new' %}" class="btn btn-primary"> Novo convidado</a>
+
+        </div>
+
+        <div class="col">
+            {% if user.is_authenticated %}
+                <p>Seja Bem Vindo {{user.username }}!
+                    <a href="{% url 'logout' %}">
+                        <span class="badge badge-dark">Sair</span>
+                    </a>
+                </p>
+
+            {% endif %}
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block footer %}
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted">Developed Web by Luiz Fernando with Django 2.x</span>
+      </div>
+    </footer>
+{% endblock %}
